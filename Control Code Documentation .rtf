@@ -1,0 +1,117 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf2 \expnd0\expndtw0\kerning0
+ \'a0\'a0\'a0Control code for the main arduino driving 'Big Red'
+\f1\fs24 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf2  \'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0Scheme - used a finite state machine controlled by the global variable 'state' all states other than a, b, l, and e return to a at the end of their run
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0a - arbiter checks ping sensors, if inside the threshold goes to 's' else goes to 'g'
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0g - gps code calculates current heading, desired heading, and then a turn angle get the char on track.
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0turns servo accordingly.
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0s - sensor response code which turns teh car and slows it down based on which ping sensors were triggered
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0l - line follow mode is used at the end of the journey to guide Big Red back into the charge station
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0b - beginning code. Backs out of the docking station and gets a gps heading
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0e - end code. stops the car and delays it for a charge period \'a0\'a0\'a0\'a0\'a0
+\f1\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f0\fs29\fsmilli14667 \cf2  \'a0\'a0\'a0\'a0\'a0The car runs from different preprogrammed way points. Once it hits the last waypoint it returns to the charge station and
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0turns on line follow mode. There will be lines that catch the car and guide it into the docking station.
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0The gps uses the gps library TinyGPS to get current position and desired headings between two sets of longitude and latitude points.
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0The waypoint sets are created using Google Earth polygons and a parsing program which will be included in the file. These points are 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0pushed onto a stack which pops them off each time a waypoint is hit. 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0This project includes code written by Brad Ydens, Fred Feyzi, Peter Stephens, and Stan Whitcomb 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0--------------- known issues -------------------
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0Currently all the drive functions are created for Pulse Width Modulation, however our H-bridge 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0uses power MOSFET's, which do not do well with the rapid switches of PWM. Established a work
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0around which uses digitalWrite to just turn them on and pour energy into them. 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0GPS does not work in the function given for some unknown reason. If put in the main code should
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0function correctly, have not tested.
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0Sensor code is really sensitive, and I had to manually add correction code because the gps code does
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0not work and the car cannot correct itself. Also the servo degree is subject to a lot of fluxuation. 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a073 is close to center but not exactly there. \'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0\'a0\'a0
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0Car cannot back up. The motor either is not strong enough or some other problem, but beware of backing
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0up. 
+\f1\fs24 \
+
+\f0\fs29\fsmilli14667  \'a0\'a0\'a0
+\f1\fs24 \
+}
