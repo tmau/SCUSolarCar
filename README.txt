@@ -1,1 +1,1 @@
-This is the ReadMe
+This code is for the solar powered autonomous car/robot that was created in Santa Clara University’s Latimer Lab over the Summer of 2017.  A team of 7 worked on this project.  The car used off the self parts and is a continuation of the Solar Powered Car that was built in the summer of 2013.  
