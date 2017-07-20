@@ -12,14 +12,11 @@ boolean blackLineFlag=false;
 
 
 void setup() {
-  
-
-
   Serial.begin(9600);
 }
 void loop() {
   // put your main code here, to run repeatedly:
-    // prints sensor values 
+  // prints sensor values 
   qtrrc.read(sensorValues);
 
   Serial.print(sensorValues[0]);
