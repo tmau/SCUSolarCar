@@ -13,7 +13,6 @@ const int pingSensor2 = 3;
 const int pingSensor3 = 4;
 const int pingSensor4 = 5;
 
-
 //------------------QTR Line Sensor------------------
 #define NUM_SENSORS   8     // number of sensors used
 #define TIMEOUT       2500  // waits for 2500 microseconds for sensor outputs to go low
@@ -32,6 +31,8 @@ int Wheel1B = 11;
 int En2 = 6;
 int Wheel2F = 7;
 int Wheel2B = 8;
+
+//Variables for 
 int Speed = 0;
 int Speed1 = 0;
 int Speed2 = 0;
@@ -39,9 +40,9 @@ int counter = 0;
 int dist = 0;
 
 //------------------Laser Range Finder------------------
-#define rxPin    10  // Serial input (connects to the LRF's SOUT pin)
-#define txPin    11  // Serial output (connects to the LRF's SIN pin)
-#define ledPin   13  // Most Arduino boards have an on-board LED on this pin
+#define rxPin    12  // Serial input (connects to the LRF's SOUT pin)
+#define txPin    13  // Serial output (connects to the LRF's SIN pin)
+#define ledPin   14  // Most Arduino boards have an on-board LED on this pin
 
 #define BUFSIZE  16  // Size of buffer (in bytes) for incoming data from the LRF (this should be adjusted to be larger than the expected response)
 
