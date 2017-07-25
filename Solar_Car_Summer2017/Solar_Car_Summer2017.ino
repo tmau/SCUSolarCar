@@ -42,7 +42,6 @@ int dist = 0;
 //------------------Laser Range Finder------------------
 #define rxPin    12  // Serial input (connects to the LRF's SOUT pin)
 #define txPin    13  // Serial output (connects to the LRF's SIN pin)
-#define ledPin   14  // Most Arduino boards have an on-board LED on this pin
 
 #define BUFSIZE  16  // Size of buffer (in bytes) for incoming data from the LRF (this should be adjusted to be larger than the expected response)
 
@@ -81,11 +80,8 @@ void setup() {
   pinMode(Wheel2B, OUTPUT);
 
     // define pin modes
-  pinMode(ledPin, OUTPUT);
   pinMode(rxPin, INPUT);
   pinMode(txPin, OUTPUT);
-
-  digitalWrite(ledPin, LOW);  // turn LED off
   
   //-----------------Laser Range Finder------------------
   while (!Serial);   // Wait until ready
@@ -191,7 +187,6 @@ void loop() {
     D = 0123 mm
   */   
   lrfSerial.print('R');         // Send command
-  digitalWrite(ledPin, HIGH);   // Turn LED on while LRF is taking a measurement
   
   // Get response back from LRF
   // See Arduino readBytesUntil() as an alternative solution to read data from the LRF
@@ -216,7 +211,6 @@ void loop() {
   Serial.println(lrfData);    // The lrfData string should now contain the data returned by the LRF, so display it on the Serial Monitor
   Serial.flush();             // Wait for all bytes to be transmitted to the Serial Monitor
  
-  digitalWrite(ledPin, LOW);  // Turn LED off
 }
 
 //------------------FUNTIONS BELOW------------------
