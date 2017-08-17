@@ -29,10 +29,10 @@ int pos = 73;
 //sensor initializations
 int IN1 = 33;
 int IN2 = 32;
-int pingPin = 35; //left ---- 
-int pingPin2 = 36; //right
-int pingPin3 = 37;//outer left
-int pingPin4 = 38;//outer Right
+int pingPin = 4; //left ---- 
+int pingPin2 = 3; //right
+int pingPin3 = 5;//outer left
+int pingPin4 = 2;//outer Right
 
 //constants -- #define's did funny things to arduino compiler so used consts
 const float v = 331.5 + 0.6*20;
