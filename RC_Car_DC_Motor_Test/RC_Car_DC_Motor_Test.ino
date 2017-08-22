@@ -3,14 +3,18 @@
 int enA = 10;
 int in1 = 9;
 int in2 = 8;
+//motor two 
 int in3 = 7;
 int in4 = 6;
 int enB = 5;
 int Speed = 200; 
-int SpeedB = 255; 
+int SpeedB = 255; //Go the maximum ammount you can turn
 
 void Forward();
 void Reverse(); 
+void Left();
+void Right(); 
+void Brake();
 
 void setup()
 {
@@ -25,23 +29,28 @@ void setup()
 
 void loop()
 {
+  //Backup to the left 
   Left(); 
   delay(2000);
+  Backward();
+  delay(2000);
+  Brake(); 
+  delay(2000);
+
+  //Forward to the right
   Right(); 
   delay(2000);
   Forward(); 
   delay(2000);
-  Backward();
+  Brake(); 
   delay(2000);
 }
 void Left(){
-  //Left
   analogWrite(enB, SpeedB);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);  
 }
 void Right(){
-  //Right
   analogWrite(enB, SpeedB);
   digitalWrite(in4, LOW);  
   digitalWrite(in3, HIGH);
