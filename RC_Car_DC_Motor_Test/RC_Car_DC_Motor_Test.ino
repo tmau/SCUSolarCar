@@ -55,13 +55,13 @@ void Right(){
   digitalWrite(in4, LOW);  
   digitalWrite(in3, HIGH);
 }
-void Forward()
+void Backward()
 {
   analogWrite(enA, Speed);
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
 }
-void Backward()
+void Forward()
 {
   analogWrite(enA, Speed);
   digitalWrite(in1, HIGH);

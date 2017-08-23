@@ -6,7 +6,7 @@
 #define TIMEOUT       2500  // waits for 2500 microseconds for sensor outputs to go low
 #define EMITTER_PIN   2     // emitter is controlled by digital pin 2
 unsigned int sensorValues[NUM_SENSORS];
-QTRSensorsRC qtrrc((unsigned char[]) {30, 31, 32, 33, 34, 35, 36, 37},
+QTRSensorsRC qtrrc((unsigned char[]) {39, 41, 43, 45, 47, 49, 51, 53}, //Pins labeled 
   NUM_SENSORS, TIMEOUT, EMITTER_PIN);
 boolean blackLineFlag=false;
 

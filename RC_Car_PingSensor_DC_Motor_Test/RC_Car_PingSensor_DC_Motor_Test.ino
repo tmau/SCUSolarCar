@@ -1,5 +1,5 @@
 //Ping Sensor Pin 
-const int pingPin = 4;
+const int pingPin = 2;
 
 // connect motor controller pins to Arduino digital pins
 // motor one
@@ -62,7 +62,7 @@ void loop()
   Serial.print("cm");
   Serial.println();
 
-  if (inches < 12){
+  if (inches < 12 ){
     Brake(); 
     delay(2000);
   }
