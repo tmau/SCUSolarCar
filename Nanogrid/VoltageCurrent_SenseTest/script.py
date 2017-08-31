@@ -10,7 +10,7 @@ import serial
 #Change the serial_port value if not an Arduino Mega 
 #Go to your arduino code and in the main menu, go to  
 #Tools then port and choose the path of the nonbluetooth port
-serial_port = '/dev/cu.usbmodem1411'; 
+serial_port = '/dev/cu.usbmodem1421'; 
 
 baud_rate = 9600; #In arduino, Serial.begin(baud_rate)
 
