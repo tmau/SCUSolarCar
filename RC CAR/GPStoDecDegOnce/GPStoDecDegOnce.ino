@@ -1,16 +1,9 @@
-/* Work on this one. Add Latitudes and Longitudes and average them
- *  
- *  
- *  
- * 
- */
-
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_LSM303_U.h>
-
+#include <math.h>                                 // used by: GPS
 
 LiquidCrystal_I2C lcd(0x3F,20,4);  // set the LCD address to 0x3F for a 20 chars and 4 line display
 SoftwareSerial gpsSerial(11, 12); // RX, TX (TX not used)
@@ -18,27 +11,15 @@ Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12345);
 
 
 const int sentenceSize = 80;
-double aveValue;
 double intLat;
 double intLong;
-double sumLat;
-double sumLong;
-double aveLat;
-double aveLong;
-int countLat;
-int countLong;
+float currentLat, currentLong; 
 char sentence[sentenceSize];
 
 void setup()
 {
   Serial.begin(9600);
   gpsSerial.begin(9600);
-  
-  sumLat=0;
-  sumLong=0;
-  aveValue=5; 
-  countLat=0;
-  countLong=0;
   
   lcd.init();                      // initialize the lcd   
   lcd.backlight();
@@ -52,7 +33,6 @@ void setup()
     lcd.setCursor(0,3);
     lcd.print("No LSM303 detected");
   }
-  
 }
 
 void loop()
@@ -91,66 +71,33 @@ void displayGPS()
   {
     heading = 360 + heading;
   }
-  lcd.setCursor(0,3);
-  //lcd.print("Heading: ");
-  lcd.print(heading);
-
-  
   if (strcmp(field, "$GPRMC") == 0)
   {
-    //Serial.print("Lat: ");
     getField(field, 3);  // number
-    intLat=atof(field);
-    //Serial.print(intLat,5);
-    //Serial.println(field);
-    if (countLat<aveValue){
-      sumLat=intLat+sumLat;
-      countLat++;
-    }
-    else{
-      aveLat=sumLat/aveValue;
-      Serial.print("Latitude: ");
-      Serial.println(aveLat,5);
-      //lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("Latitude: ");
-      lcd.print(aveLat,3);
-      countLat=0;
-      sumLat=0;
-    }
-
-    
+    currentLat=atof(field);
+    currentLat = convertDegMinToDecDeg(currentLat);
     getField(field, 4); // N/S
-
-    //Serial.print(field);
-    
-    //Serial.print(" Long: ");
     getField(field, 5);  // number
-    //Serial.println(",");
-    intLong=atof(field);
-    if (countLong<aveValue){
-      sumLong=intLong+sumLong;
-      countLong++;
-    }
-    else{
-      aveLong=sumLong/aveValue;
-      Serial.print("Longitude: ");
-      Serial.println(aveLong,5);
-      lcd.setCursor(0,1);
-      lcd.print("Longitude: ");
-      lcd.print(aveLong,3);
-      //Serial.println(" ");
-      countLong=0;
-      sumLong=0;
-    }
-    Serial.println(".");
-    //Serial.print(intLong,5);
-    //Serial.println(field);
-    
-
-    //Serial.print(field);
+    currentLong=atof(field);
+    currentLong = convertDegMinToDecDeg(currentLong); 
     getField(field, 6);  // E/W
-    //Serial.println(field);
+    //Serial Printing
+    Serial.print("CURRENT LAT: "); 
+    Serial.println(currentLat,5);
+    Serial.print("CURRENT LONG: ");
+    Serial.println(currentLong,5);
+    Serial.print("HEADING: ");
+    Serial.println(heading);
+    Serial.println(".");
+    //LCD Printing
+    lcd.setCursor(0,0);
+    lcd.print("Latitude: ");
+    lcd.print(currentLat,3);
+    lcd.setCursor(0,1);
+    lcd.print("Longitude: ");
+    lcd.print(currentLong,3);
+    lcd.setCursor(0,3);
+    lcd.print(heading);
   }
 }
 
@@ -174,5 +121,22 @@ void getField(char* buffer, int index)
     sentencePos ++;
   }
   buffer[fieldPos] = '\0';
-} 
+}
+
+
+// converts lat/long from Adafruit degree-minute format to decimal-degrees; requires <math.h> library
+double convertDegMinToDecDeg (float degMin) 
+{
+  double min = 0.0;
+  double decDeg = 0.0;
+ 
+  //get the minutes, fmod() requires double
+  min = fmod((double)degMin, 100.0);
+ 
+  //rebuild coordinates in decimal degrees
+  degMin = (int) ( degMin / 100 );
+  decDeg = degMin + ( min / 60 );
+ 
+  return decDeg;
+}
 
